@@ -15,7 +15,6 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "body-parser": "^1.15.1",
-    "bulma": "0.0.26",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "fetchival": "^0.3.2",

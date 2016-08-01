@@ -24,7 +24,7 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="" component={Main}>
-        <Route path="/" component={Pages.Home} />
+        <Route path="home" component={Pages.Home} />
         <Route path="listentries" component={Pages.ListEntries} />
         <Route path="*" component={Pages.NotFound} />
       </Route>
