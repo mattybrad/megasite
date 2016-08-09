@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import NavBar from '../components/NavBar';
 import * as Actions from '../actions/EntryActions';
 import { Link } from 'react-router';
 
@@ -25,8 +24,7 @@ class ListEntriesComponent extends React.Component {
   render() {
     return (
       <div>
-        <h1 className="title">Testing </h1>
-        <NavBar activePage="listentries" />
+        test!
       </div>
     )
   }
