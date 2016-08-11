@@ -1,11 +1,16 @@
 import React from 'react';
-import CogSystem from '../components/CogSystem';
+import Terminal from '../components/Terminal';
+import TerminalLine from '../components/TerminalLine';
 
 export default class HomeComponent extends React.Component {
   render() {
     return (
       <div>
-        <CogSystem width={8} height={6} />
+        <Terminal>
+          <TerminalLine>a</TerminalLine>
+          <TerminalLine>b</TerminalLine>
+          <TerminalLine>see</TerminalLine>
+        </Terminal>
       </div>
     )
   }
