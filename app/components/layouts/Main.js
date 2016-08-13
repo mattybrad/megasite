@@ -1,4 +1,5 @@
 import React from 'react';
+import AmbientPlayer from '../AmbientPlayer';
 
 export default class Main extends React.Component {
 	render() {
@@ -7,6 +8,7 @@ export default class Main extends React.Component {
 				<div>
         	{this.props.children}
 				</div>
+        <AmbientPlayer />
 			</section>
 		)
 	}
