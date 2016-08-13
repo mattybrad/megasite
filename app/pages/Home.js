@@ -7,9 +7,11 @@ export default class HomeComponent extends React.Component {
     return (
       <div>
         <Terminal>
-          <TerminalLine>a</TerminalLine>
-          <TerminalLine>b</TerminalLine>
-          <TerminalLine>see</TerminalLine>
+          <TerminalLine>Welcome</TerminalLine>
+          <TerminalLine>There will be text here...</TerminalLine>
+          <TerminalLine>Stuff goes here</TerminalLine>
+          <TerminalLine>Processing...</TerminalLine>
+          <TerminalLine>Would you like to experience audio?</TerminalLine>
         </Terminal>
       </div>
     )

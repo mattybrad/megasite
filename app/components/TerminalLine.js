@@ -15,9 +15,9 @@ export default class TerminalLine extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<span>
 				{this.props.children}
-			</div>
+			</span>
 		)
 	}
 }
