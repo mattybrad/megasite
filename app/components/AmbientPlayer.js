@@ -10,6 +10,10 @@ export default class AmbientPlayer extends React.Component {
 	}
 
 	componentDidMount() {
+		if(this.props.play) this.startAmbience();
+	}
+
+	startAmbience() {
 		this.actx = new AudioContext();
 		// temp thing to demonstrate web audio working
 		this.outputNode = this.actx.createGain();

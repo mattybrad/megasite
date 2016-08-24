@@ -8,7 +8,7 @@ export default class Main extends React.Component {
 				<div>
         	{this.props.children}
 				</div>
-        <AmbientPlayer />
+        <AmbientPlayer play={false} />
 			</section>
 		)
 	}
