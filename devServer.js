@@ -20,7 +20,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.use('/public', express.static('uploads'));
+app.use('/css', express.static('app/css'));
 
 app.use('/', routes);
 
