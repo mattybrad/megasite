@@ -1,7 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import _ from 'underscore';
+import * as Actions from '../actions/BackgroundActions';
 
-export default class BackgroundCanvas extends React.Component {
+const mapStateToProps = (state) => {
+  return {
+		primaryColor: state.Background.primaryColor,
+		secondaryColor: state.Background.secondaryColor
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    testAction: () => {
+      dispatch(Actions.testAction());
+    }
+  }
+}
+
+class BackgroundCanvasComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -25,10 +42,21 @@ export default class BackgroundCanvas extends React.Component {
 	}
 
 	paint() {
-		if(this.state.ctx) {
+		if(this.state.ctx && this.props.primaryColor && this.props.secondaryColor) {
 			var ctx = this.state.ctx;
-			ctx.fillStyle = "rgba(255,255,255,0.1)";
-			ctx.fillRect(Math.random() * ctx.canvas.width, Math.random() * ctx.canvas.height, 150, 150);
+			ctx.globalAlpha = 0.04;
+			for(var i=0;i<3;i++){
+				ctx.fillStyle = Math.random()>0.5?this.props.primaryColor:this.props.secondaryColor;
+				ctx.beginPath();
+				ctx.arc(
+					Math.random() * (ctx.canvas.width + 200) - 100,
+					Math.random() * (ctx.canvas.height + 200) -100,
+					50 + 100 * Math.random(),
+					0,
+					2 * Math.PI
+				);
+				ctx.fill();
+			}
 		}
 		window.requestAnimationFrame(this.paint.bind(this));
 	}
@@ -39,3 +67,10 @@ export default class BackgroundCanvas extends React.Component {
 		)
 	}
 }
+
+const BackgroundCanvas = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BackgroundCanvasComponent);
+
+export default BackgroundCanvas;

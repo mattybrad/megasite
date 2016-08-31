@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import Entries from './Entries';
+import Background from './Background';
 
 const rootReducer = combineReducers({
-  Entries
+  Background
 });
 
 export default rootReducer;
