@@ -10,9 +10,11 @@ export default class Main extends React.Component {
 				<div className="foreground">
 					<div className="section hero">
 						<div className="container">
-							<Menu className="row" />
 							<div className="row">
-			        	{this.props.children}
+                <div className="full-width column">
+                  <Menu />
+			        	  {this.props.children}
+                </div>
 							</div>
 						</div>
 					</div>

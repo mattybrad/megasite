@@ -1,7 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import _ from 'underscore';
+import * as Actions from '../actions/MusicActions';
 
-export default class AmbientPlayer extends React.Component {
+const mapStateToProps = (state) => {
+  return {
+    freq: state.Music.freq
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+class AmbientPlayerComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,12 +33,18 @@ export default class AmbientPlayer extends React.Component {
 		this.outputNode = this.actx.createGain();
     this.outputNode.connect(this.actx.destination);
     this.outputNode.gain.value = 0.1;
-    this.oscillator = this.actx.createOscillator();
-    this.oscillator.type = 'square';
-    this.oscillator.frequency.value = 200;
-    this.oscillator.connect(this.outputNode);
-    this.oscillator.start();
+    setInterval(this.pulse.bind(this), 500);
 	}
+
+  pulse() {
+    var oscillator = this.actx.createOscillator();
+    oscillator.type = 'square';
+    console.log(this.props.freq);
+    oscillator.frequency.value = this.props.freq;
+    oscillator.connect(this.outputNode);
+    oscillator.start(this.actx.currentTime);
+    oscillator.stop(this.actx.currentTime + 0.1);
+  }
 
 	render() {
 		return (
@@ -32,3 +52,10 @@ export default class AmbientPlayer extends React.Component {
 		)
 	}
 }
+
+const AmbientPlayer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AmbientPlayerComponent);
+
+export default AmbientPlayer;
