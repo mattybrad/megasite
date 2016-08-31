@@ -25,7 +25,7 @@ render(
     <Router history={browserHistory}>
       <Route path="" component={Main}>
         <Route path="/" component={Pages.Home} />
-        <Route path="/listentries" component={Pages.ListEntries} />
+        <Route path="projects" component={Pages.Projects} />
         <Route path="*" component={Pages.NotFound} />
       </Route>
     </Router>
