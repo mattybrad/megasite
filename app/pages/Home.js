@@ -6,7 +6,7 @@ export default class HomeComponent extends React.Component {
   render() {
     return (
       <div>
-        <BackgroundDefinition primaryColor='#00cc00' secondaryColor='#0000cc' />
+        <BackgroundDefinition primaryColor='#99ffff' secondaryColor='#0000ff' />
         <AmbientDefinition freq={220} />
         <h1>{"Matt's awesome website"}</h1>
         <p>This is some sort of welcome paragraph.</p>
