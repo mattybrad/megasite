@@ -8,10 +8,10 @@ export default class Main extends React.Component {
 		return (
 			<div>
 				<div className="foreground">
-					<div className="section hero">
-						<div className="container">
-							<div className="row">
-                <div className="full-width column">
+					<div className="">
+						<div className="">
+							<div className="">
+                <div className="">
                   <Menu />
 			        	  {this.props.children}
                 </div>
@@ -19,7 +19,7 @@ export default class Main extends React.Component {
 						</div>
 					</div>
 				</div>
-				<AmbientPlayer play={false} />
+				<AmbientPlayer play={true} />
 				<BackgroundCanvas />
 			</div>
 		)
