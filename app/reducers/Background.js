@@ -9,10 +9,7 @@ export default function Background(
   action
 ) {
   switch(action.type) {
-    case Actions.TEST_ACTION:
-    return Object.assign({}, state, {myTestVar:"hello there"});
-
-    case Actions.SET_ACTIVE:
+    case Actions.SET_BACKGROUND_ACTIVE:
     return Object.assign({}, state, {
       active: action.isActive
     });

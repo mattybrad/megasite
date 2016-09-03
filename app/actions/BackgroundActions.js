@@ -1,17 +1,10 @@
 import fetchival from 'fetchival';
 let entries = fetchival('/api/v1/entries');
 
-export const TEST_ACTION = 'TEST_ACTION';
-export function testAction() {
+export const SET_BACKGROUND_ACTIVE = 'SET_BACKGROUND_ACTIVE';
+export function setBackgroundActive(isActive) {
   return {
-    type: TEST_ACTION
-  }
-}
-
-export const SET_ACTIVE = 'SET_ACTIVE';
-export function setActive(isActive) {
-  return {
-    type: SET_ACTIVE,
+    type: SET_BACKGROUND_ACTIVE,
     isActive
   }
 }

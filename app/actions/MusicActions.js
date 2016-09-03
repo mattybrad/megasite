@@ -1,10 +1,11 @@
 import fetchival from 'fetchival';
 let entries = fetchival('/api/v1/entries');
 
-export const TEST_ACTION = 'TEST_ACTION';
-export function testAction() {
+export const SET_MUSIC_ACTIVE = 'SET_MUSIC_ACTIVE';
+export function setMusicActive(isActive) {
   return {
-    type: TEST_ACTION
+    type: SET_MUSIC_ACTIVE,
+    isActive
   }
 }
 

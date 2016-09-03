@@ -5,7 +5,8 @@ import * as Actions from '../actions/MusicActions';
 
 const mapStateToProps = (state) => {
   return {
-    freq: state.Music.freq
+    freq: state.Music.freq,
+    active: state.Music.active
   }
 }
 
@@ -24,7 +25,7 @@ class AmbientPlayerComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		if(this.props.play) this.startAmbience();
+		this.startAmbience();
 	}
 
 	startAmbience() {
@@ -37,12 +38,14 @@ class AmbientPlayerComponent extends React.Component {
 	}
 
   pulse() {
-    var oscillator = this.actx.createOscillator();
-    oscillator.type = 'square';
-    oscillator.frequency.value = this.props.freq;
-    oscillator.connect(this.outputNode);
-    oscillator.start(this.actx.currentTime);
-    oscillator.stop(this.actx.currentTime + 0.1);
+    if(this.props.active) {
+      var oscillator = this.actx.createOscillator();
+      oscillator.type = 'square';
+      oscillator.frequency.value = this.props.freq;
+      oscillator.connect(this.outputNode);
+      oscillator.start(this.actx.currentTime);
+      oscillator.stop(this.actx.currentTime + 0.1);
+    }
   }
 
 	render() {
