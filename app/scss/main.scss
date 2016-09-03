@@ -25,6 +25,7 @@ a:hover {
 .foregroundInner {
   //display: inline-block;
   padding: 10px;
+  max-width: 960px;
 }
 
 .bgCanvas {
@@ -34,4 +35,20 @@ a:hover {
   top: 0px;
   width: 100%;
   height: 120%;
+}
+
+.projectPreview {
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 0.5em;
+}
+
+.projectPreview h4 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.tagList {
+  font-variant: small-caps;
 }
