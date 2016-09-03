@@ -39,7 +39,6 @@ class AmbientPlayerComponent extends React.Component {
   pulse() {
     var oscillator = this.actx.createOscillator();
     oscillator.type = 'square';
-    console.log(this.props.freq);
     oscillator.frequency.value = this.props.freq;
     oscillator.connect(this.outputNode);
     oscillator.start(this.actx.currentTime);

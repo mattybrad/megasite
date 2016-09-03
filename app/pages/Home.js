@@ -12,6 +12,9 @@ export default class HomeComponent extends React.Component {
         <p>This is some sort of welcome paragraph.</p>
         <p>Here is some more text, probably explaining what sort of things I do.</p>
         <p>Maybe this paragraph is about the ambient music etc, or maybe something else. Whatever.</p>
+        <p>Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling!</p>
+        <p>Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling!</p>
+        <p>Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling! Now let's do some scrolling!</p>
       </div>
     )
   }

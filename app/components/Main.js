@@ -1,14 +1,14 @@
 import React from 'react';
-import AmbientPlayer from '../AmbientPlayer';
-import BackgroundCanvas from '../BackgroundCanvas';
-import Menu from '../Menu';
+import AmbientPlayer from './AmbientPlayer';
+import BackgroundCanvas from './BackgroundCanvas';
+import Menu from './Menu';
 
 export default class Main extends React.Component {
 	render() {
 		return (
 			<div>
 				<div className="foreground">
-					<div className="">
+					<div className="foregroundInner">
 						<div className="">
 							<div className="">
                 <div className="">

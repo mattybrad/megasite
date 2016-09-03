@@ -11,7 +11,7 @@ a {
 }
 
 a:hover {
-  
+
 }
 
 .foreground {
@@ -22,11 +22,16 @@ a:hover {
   top: 0px;
 }
 
+.foregroundInner {
+  //display: inline-block;
+  padding: 10px;
+}
+
 .bgCanvas {
   z-index: 1;
   position: fixed;
   left: 0px;
   top: 0px;
   width: 100%;
-  height: 100%;
+  height: 120%;
 }

@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers';
 import { render } from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
-import Main from './components/layouts/Main';
+import Main from './components/Main';
 import * as Pages from './pages';
 
 import './scss/main.scss';

@@ -29,13 +29,19 @@ class BackgroundCanvasComponent extends React.Component {
 	componentDidMount() {
 		this.initCanvas();
 		window.requestAnimationFrame(this.paint.bind(this));
-		window.addEventListener('resize', this.initCanvas.bind(this));
+		window.addEventListener('resize', this.resizeCanvasIfMuchDifferent.bind(this));
 	}
+
+  resizeCanvasIfMuchDifferent() {
+    var style = window.getComputedStyle(ctx.canvas);
+    // boring, do this later
+  }
 
 	initCanvas() {
 		var ctx = this.refs.cvs.getContext("2d");
-		ctx.canvas.width = window.innerWidth;
-		ctx.canvas.height = window.innerHeight;
+    var style = window.getComputedStyle(ctx.canvas);
+		ctx.canvas.width = parseInt(style.width);
+		ctx.canvas.height = parseInt(style.height);
 		this.setState({
 			ctx: ctx
 		})

@@ -16,8 +16,11 @@ export default class Menu extends React.Component {
 	render() {
 		return (
 			<div>
-				<Link to="/">Home</Link><span> </span>
-				<Link to="/projects">Projects</Link>
+				<Link to="/">Home</Link><span>, </span>
+				<Link to="/about">About</Link><span>, </span>
+				<Link to="/projects">Projects</Link><span>, </span>
+				<Link to="/blog">Blog</Link><span>, </span>
+				<Link to="/ambience">Ambience</Link><span> </span>
 			</div>
 		)
 	}
