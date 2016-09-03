@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
+import {persistStore, autoRehydrate} from 'redux-persist'
 import { Provider } from 'react-redux';
 import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
@@ -17,8 +18,10 @@ const store = createStore(
   applyMiddleware(
   	thunkMiddleware,
     loggerMiddleware
-  )
+  ),
+  autoRehydrate()
 );
+persistStore(store);
 
 render(
   <Provider store={store}>
