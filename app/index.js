@@ -26,6 +26,9 @@ render(
       <Route path="" component={Main}>
         <Route path="/" component={Pages.Home} />
         <Route path="projects" component={Pages.Projects} />
+        <Route path="about" component={Pages.About} />
+        <Route path="blog" component={Pages.Blog} />
+        <Route path="ambience" component={Pages.Ambience} />
         <Route path="*" component={Pages.NotFound} />
       </Route>
     </Router>

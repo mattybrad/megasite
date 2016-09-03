@@ -6,10 +6,10 @@ export default class PageComponent extends React.Component {
   render() {
     return (
       <div>
-        <BackgroundDefinition primaryColor='#ffff00' secondaryColor='#ff0000' />
+        <BackgroundDefinition primaryColor='#cc0000' secondaryColor='#0000cc' />
         <AmbientDefinition freq={440} />
-        <h1>Projects</h1>
-        <p>This is a future list of projects.</p>
+        <h1>About</h1>
+        <p>Some info about me, maybe even contact info, whatever.</p>
       </div>
     )
   }

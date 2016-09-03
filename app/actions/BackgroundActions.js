@@ -8,6 +8,14 @@ export function testAction() {
   }
 }
 
+export const SET_ACTIVE = 'SET_ACTIVE';
+export function setActive(isActive) {
+  return {
+    type: SET_ACTIVE,
+    isActive
+  }
+}
+
 export const SET_COLORS = 'SET_COLORS';
 export function setColors(primaryColor, secondaryColor) {
   return {

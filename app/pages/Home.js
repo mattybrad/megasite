@@ -2,11 +2,11 @@ import React from 'react';
 import BackgroundDefinition from '../components/BackgroundDefinition';
 import AmbientDefinition from '../components/AmbientDefinition';
 
-export default class HomeComponent extends React.Component {
+export default class PageComponent extends React.Component {
   render() {
     return (
       <div>
-        <BackgroundDefinition primaryColor='#99ffff' secondaryColor='#0000ff' />
+        <BackgroundDefinition primaryColor='#00cccc' secondaryColor='#0000ff' />
         <AmbientDefinition freq={220} />
         <h1>{"Matt's awesome website"}</h1>
         <p>This is some sort of welcome paragraph.</p>

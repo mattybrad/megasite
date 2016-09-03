@@ -6,7 +6,8 @@ import * as Actions from '../actions/BackgroundActions';
 const mapStateToProps = (state) => {
   return {
 		primaryColor: state.Background.primaryColor,
-		secondaryColor: state.Background.secondaryColor
+		secondaryColor: state.Background.secondaryColor,
+    active: state.Background.active
   }
 }
 
@@ -28,13 +29,31 @@ class BackgroundCanvasComponent extends React.Component {
 
 	componentDidMount() {
 		this.initCanvas();
-		window.requestAnimationFrame(this.paint.bind(this));
+		this.startAnimation();
 		window.addEventListener('resize', this.resizeCanvasIfMuchDifferent.bind(this));
 	}
 
+  componentDidUpdate(prevProps, prevState) {
+    if(!this.props.active && prevProps.active) {
+      this.setState({
+        ctx: null
+      })
+    }
+    if(this.props.active && !prevProps.active) {
+      this.initCanvas();
+  		this.startAnimation();
+    }
+  }
+
+  startAnimation() {
+    window.requestAnimationFrame(this.paint.bind(this));
+  }
+
   resizeCanvasIfMuchDifferent() {
-    var style = window.getComputedStyle(ctx.canvas);
-    // boring, do this later
+    if(this.props.active) {
+      var style = window.getComputedStyle(ctx.canvas);
+      // boring, do this later
+    }
   }
 
 	initCanvas() {
@@ -69,7 +88,7 @@ class BackgroundCanvasComponent extends React.Component {
 
 	render() {
 		return (
-			<canvas ref="cvs" className="bgCanvas"></canvas>
+			this.props.active ? <canvas ref="cvs" className="bgCanvas"></canvas> : null
 		)
 	}
 }
