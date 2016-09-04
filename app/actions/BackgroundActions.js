@@ -1,6 +1,3 @@
-import fetchival from 'fetchival';
-let entries = fetchival('/api/v1/entries');
-
 export const SET_BACKGROUND_ACTIVE = 'SET_BACKGROUND_ACTIVE';
 export function setBackgroundActive(isActive) {
   return {

@@ -7,6 +7,8 @@ var config = require('./webpack.config.js');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
+mongoose.connect('mongodb://localhost/mysite');
+
 var app = express();
 app.use(bodyParser.json());
 var compiler = webpack(config);

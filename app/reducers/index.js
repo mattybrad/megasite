@@ -2,10 +2,12 @@ import { combineReducers } from 'redux';
 
 import Background from './Background';
 import Music from './Music';
+import Projects from './Projects';
 
 const rootReducer = combineReducers({
   Background,
-  Music
+  Music,
+  Projects
 });
 
 export default rootReducer;

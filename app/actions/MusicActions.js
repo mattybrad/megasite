@@ -1,6 +1,3 @@
-import fetchival from 'fetchival';
-let entries = fetchival('/api/v1/entries');
-
 export const SET_MUSIC_ACTIVE = 'SET_MUSIC_ACTIVE';
 export function setMusicActive(isActive) {
   return {

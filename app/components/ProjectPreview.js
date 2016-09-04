@@ -16,7 +16,7 @@ export default class ProjectPreview extends React.Component {
 	render() {
 		return (
 			<div className="projectPreview">
-				<Link to="/"><h4>{this.props.title}</h4></Link>
+				<Link to={"/projects/"+this.props.path}><h4>{this.props.title}</h4></Link>
 				<span>{this.props.description}</span>
 				<div className="tagList">
 					{this.props.tags.map(function(tag, idx){
