@@ -15,7 +15,7 @@ export default class Menu extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className="topMenu">
 				<Link to="/">Home</Link><span>, </span>
 				<Link to="/about">About</Link><span>, </span>
 				<Link to="/projects">Projects</Link><span>, </span>

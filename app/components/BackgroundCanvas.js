@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    
+
   }
 }
 
@@ -67,13 +67,20 @@ class BackgroundCanvasComponent extends React.Component {
 	paint() {
 		if(this.state.ctx && this.props.primaryColor && this.props.secondaryColor) {
 			var ctx = this.state.ctx;
-			ctx.globalAlpha = 0.04;
+      var x, y;
 			for(var i=0;i<3;i++){
+        x = Math.random() * (ctx.canvas.width + 200) - 100;
+        y = Math.random() * (ctx.canvas.height + 200) -100;
+        var xDiff = 0;
+        if(x<window.innerWidth/2-700/2-150||x>window.innerWidth/2+700/2+150) {
+          xDiff = 1;
+        }
+        ctx.globalAlpha = (xDiff>0)?0.15:0.04;
 				ctx.fillStyle = Math.random()>0.5?this.props.primaryColor:this.props.secondaryColor;
 				ctx.beginPath();
 				ctx.arc(
-					Math.random() * (ctx.canvas.width + 200) - 100,
-					Math.random() * (ctx.canvas.height + 200) -100,
+					x,
+          y,
 					50 + 100 * Math.random(),
 					0,
 					2 * Math.PI
