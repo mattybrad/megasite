@@ -3,6 +3,36 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as Actions from '../actions/MusicActions';
 
+class Channel {
+  constructor(type, params, actx) {
+    this.type = type;
+    this.params = params;
+    this.actx = actx;
+    this.outputNode = this.actx.createGain();
+    this.outputNode.connect(this.actx.destination);
+    this.outputNode.gain.value = 0.1;
+  }
+
+  scheduleSounds() {
+    var oscillator;
+    oscillator = this.actx.createOscillator();
+    oscillator.type = this.params.oscType;
+    oscillator.frequency.value = 300;
+    oscillator.connect(this.outputNode);
+    oscillator.start(this.actx.currentTime);
+    oscillator.stop(this.actx.currentTime + 0.05);
+
+    oscillator = this.actx.createOscillator();
+    oscillator.type = this.params.oscType;
+    oscillator.frequency.value = 600;
+    oscillator.connect(this.outputNode);
+    oscillator.start(this.actx.currentTime + 0.5);
+    oscillator.stop(this.actx.currentTime + 0.7);
+
+    // need to schedule things properly, not based on setInterval
+  }
+}
+
 const mapStateToProps = (state) => {
   return {
     freq: state.Music.freq,
@@ -30,21 +60,22 @@ class AmbientPlayerComponent extends React.Component {
 
 	startAmbience() {
 		this.actx = new AudioContext();
-		// temp thing to demonstrate web audio working
+
 		this.outputNode = this.actx.createGain();
     this.outputNode.connect(this.actx.destination);
     this.outputNode.gain.value = 0.1;
-    setInterval(this.pulse.bind(this), 500);
+
+    var c = new Channel("osc", {
+      oscType: "triangle"
+    }, this.actx);
+
+    setInterval(this.scheduleAllSounds.bind(this, c), 1000);
 	}
 
-  pulse() {
+  scheduleAllSounds(tempChannel) {
+    // will map over all active channels
     if(this.props.active) {
-      var oscillator = this.actx.createOscillator();
-      oscillator.type = 'square';
-      oscillator.frequency.value = this.props.freq;
-      oscillator.connect(this.outputNode);
-      oscillator.start(this.actx.currentTime);
-      oscillator.stop(this.actx.currentTime + 0.1);
+      tempChannel.scheduleSounds();
     }
   }
 

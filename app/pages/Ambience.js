@@ -24,6 +24,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default class PageComponent extends React.Component {
+  onBackgroundSettings() {
+    
+  }
+
   render() {
     return (
       <div>

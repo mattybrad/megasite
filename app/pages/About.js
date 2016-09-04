@@ -9,7 +9,8 @@ export default class PageComponent extends React.Component {
         <BackgroundDefinition primaryColor='#cc0000' secondaryColor='#0000cc' />
         <AmbientDefinition freq={440} />
         <h1>About</h1>
-        <p>Some info about me, maybe even contact info, whatever.</p>
+        <p>I am a professional web developer and unprofessional musician from Oxford. I also have a lot of hobbies that span the amorphous gap between these two pursuits.</p>
+        <p>I love the process of proving a concept. I hope this website will, in time, become a repository of working prototypes and demonstrations.</p>
       </div>
     )
   }
