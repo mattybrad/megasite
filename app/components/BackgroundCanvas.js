@@ -75,16 +75,12 @@ class BackgroundCanvasComponent extends React.Component {
         if(x<window.innerWidth/2-700/2-150||x>window.innerWidth/2+700/2+150) {
           xDiff = 1;
         }
-        ctx.globalAlpha = (xDiff>0)?0.15:0.04;
+        ctx.globalAlpha = (xDiff>0)?0.06:0.04;
 				ctx.fillStyle = Math.random()>0.5?this.props.primaryColor:this.props.secondaryColor;
 				ctx.beginPath();
-				ctx.arc(
-					x,
-          y,
-					50 + 100 * Math.random(),
-					0,
-					2 * Math.PI
-				);
+        var r = 50 + 100 * Math.random();
+        if(xDiff>0) ctx.rect(x-r,y-r,r*2,r*2);
+        else ctx.arc(x,y,50 + 100 * Math.random(),0,2 * Math.PI);
 				ctx.fill();
 			}
 		}
