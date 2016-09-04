@@ -21,7 +21,7 @@ export default class ProjectPreview extends React.Component {
 				<div className="tagList">
 					{this.props.tags.map(function(tag, idx){
 						return (
-							<span>
+							<span key={"tag_"+idx}>
 								<span>{idx==0?"":", "}</span>
 								<span>{tag}</span>
 							</span>

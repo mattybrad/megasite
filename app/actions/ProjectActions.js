@@ -61,16 +61,16 @@ export function fetchProjects() {
   }
 }
 
-export function fetchProject(projectID) {
+export function fetchProject(projectName) {
   return function(dispatch) {
-    dispatch(requestFetchProjects());
-    projects(projectID)
+    dispatch(requestFetchProject());
+    projects(projectName)
       .get()
       .then(function(json) {
-        dispatch(successFetchProjects(json));
+        dispatch(successFetchProject(json));
       })
       .catch(function(err) {
-        dispatch(failureFetchProjects(err.message));
+        dispatch(failureFetchProject(err.message));
       })
   }
 }
