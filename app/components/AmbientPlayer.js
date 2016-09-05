@@ -90,17 +90,23 @@ class AmbientPlayerComponent extends React.Component {
 	}
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.activeChannelSet != this.props.activeChannelSet) {
-      // stop all channels (fading comes later)
-      for(var key in this.channelSets) {
-        if(this.channelSets.hasOwnProperty(key)) {
-          var cs = this.channelSets[key];
-          for(var i=0; i<cs.length; i++) {
-            cs[i].stop();
-          }
+    if(prevProps.activeChannelSet != this.props.activeChannelSet || prevProps.active != this.props.active) {
+      this.updateChannelSets();
+    }
+  }
+
+  updateChannelSets() {
+    // stop all channels (fading comes later)
+    for(var key in this.channelSets) {
+      if(this.channelSets.hasOwnProperty(key)) {
+        var cs = this.channelSets[key];
+        for(var i=0; i<cs.length; i++) {
+          cs[i].stop();
         }
       }
+    }
 
+    if(this.props.active) {
       this.channelSets[this.props.activeChannelSet] = this.props.channelSets[this.props.activeChannelSet].map(function(channel, idx) {
         return new Channel("oscSet", channel, this.actx)
       }.bind(this))

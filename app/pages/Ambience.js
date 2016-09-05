@@ -25,14 +25,26 @@ const mapDispatchToProps = (dispatch) => {
 
 export default class PageComponent extends React.Component {
   onBackgroundSettings() {
-    
+
   }
 
   render() {
     return (
       <div>
         <BackgroundDefinition primaryColor='#ff00ff' secondaryColor='#00cc00' />
-        <AmbientDefinition freq={440} />
+        <AmbientDefinition
+          name="ambience"
+          channels={
+            [
+              {
+                type: "oscSet",
+                notes: [200,220],
+                wave: "square",
+                probability: 0.3
+              }
+            ]
+          }
+        />
         <h1>Ambience</h1>
         <p onClick={this.props.setBackgroundActive.bind(this, !this.props.backgroundActive)}>Animated background is {this.props.backgroundActive?"active":"inactive"} (click to {this.props.backgroundActive?"deactivate":"activate"})</p>
         <p onClick={this.props.setMusicActive.bind(this, !this.props.musicActive)}>Ambient soundtrack is {this.props.musicActive?"active":"inactive"} (click to {this.props.musicActive?"deactivate":"activate"})</p>
