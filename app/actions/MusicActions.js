@@ -7,9 +7,9 @@ export function setMusicActive(isActive) {
 }
 
 export const SET_AMBIENCE = 'SET_AMBIENCE';
-export function setAmbience(freq) {
+export function setAmbience(channels) {
   return {
     type: SET_AMBIENCE,
-    freq
+    channels
   }
 }

@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as Actions from '../actions/MusicActions';
 
+// big thanks to https://github.com/cwilso/metronome
+
 class Channel {
   constructor(type, params, actx) {
     this.type = type;
     this.params = params;
     this.actx = actx;
     this.current16thNote = 0;
-    this.tempo = 120;
+    this.tempo = 40;
     this.lookahead = 25.0;
     this.scheduleAheadTime = 0.1;
     this.nextNoteTime = 0.0;
@@ -30,19 +32,14 @@ class Channel {
   }
 
   scheduleNote(beatNumber, time) {
-    //currentNoteStartTime = time;
-    // create an oscillator
-    var osc = this.actx.createOscillator();
-    osc.connect(this.outputNode);
-
-    if (! (beatNumber % 16) )         // beat 0 == low pitch
-    osc.frequency.value = 220.0;
-    else if (beatNumber % 4)          // quarter notes = medium pitch
-    osc.frequency.value = 1000 * Math.random();
-    else                              // other 16th notes = high pitch
-    osc.frequency.value = 880.0;
-    osc.start( time );
-    osc.stop( time + 0.2 );
+    if(Math.random() < this.params.probability) {
+      var osc = this.actx.createOscillator();
+      osc.connect(this.outputNode);
+      osc.type = this.params.wave;
+      osc.frequency.value = this.params.notes[Math.floor(Math.random()*this.params.notes.length)];
+      osc.start( time );
+      osc.stop( time + 0.2 );
+    }
   }
 
   nextNote() {
@@ -54,32 +51,12 @@ class Channel {
     if (this.current16thNote == 16) {
       this.current16thNote = 0;
     }
-    console.log(this.current16thNote)
-  }
-
-  scheduleSounds() {
-    // var oscillator;
-    // oscillator = this.actx.createOscillator();
-    // oscillator.type = this.params.oscType;
-    // oscillator.frequency.value = 300;
-    // oscillator.connect(this.outputNode);
-    // oscillator.start(this.actx.currentTime);
-    // oscillator.stop(this.actx.currentTime + 0.05);
-    //
-    // oscillator = this.actx.createOscillator();
-    // oscillator.type = this.params.oscType;
-    // oscillator.frequency.value = 600;
-    // oscillator.connect(this.outputNode);
-    // oscillator.start(this.actx.currentTime + 0.5);
-    // oscillator.stop(this.actx.currentTime + 0.7);
-
-    // need to schedule things properly, not based on setInterval
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    freq: state.Music.freq,
+    channels: state.Music.channels,
     active: state.Music.active
   }
 }
@@ -96,11 +73,18 @@ class AmbientPlayerComponent extends React.Component {
 		this.state = {
 
 		}
+    console.log(this.props.channels);
 	}
 
 	componentDidMount() {
-		this.startAmbience();
+
 	}
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.channels.length < this.props.channels.length) {
+      this.startAmbience();
+    }
+  }
 
 	startAmbience() {
 		this.actx = new AudioContext();
@@ -109,19 +93,11 @@ class AmbientPlayerComponent extends React.Component {
     this.outputNode.connect(this.actx.destination);
     this.outputNode.gain.value = 0.1;
 
-    var c = new Channel("osc", {
-      oscType: "triangle"
-    }, this.actx);
-
-    setInterval(this.scheduleAllSounds.bind(this, c), 1000);
+    this.props.channels.map(function(channel, idx) {
+      var c = new Channel("osc", channel, this.actx);
+      console.log(channel)
+    }.bind(this))
 	}
-
-  scheduleAllSounds(tempChannel) {
-    // will map over all active channels
-    if(this.props.active) {
-      //tempChannel.scheduleSounds();
-    }
-  }
 
 	render() {
 		return (

@@ -13,13 +13,13 @@ export default class PageComponent extends React.Component {
               {
                 type: "oscSet",
                 notes: [400,450,500,800],
-                wave: "sine",
+                wave: "square",
                 probability: 0.5
               },
               {
                 type: "oscSet",
-                notes: [200,250],
-                wave: "square",
+                notes: [300,330],
+                wave: "sine",
                 probability: 1
               }
             ]

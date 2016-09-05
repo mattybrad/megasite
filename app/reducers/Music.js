@@ -3,7 +3,7 @@ import * as Actions from '../actions/MusicActions';
 export default function Background(
   state = {
     active: true,
-    freq: 110
+    channels: []
   },
   action
 ) {
@@ -15,7 +15,7 @@ export default function Background(
 
     case Actions.SET_AMBIENCE:
     return Object.assign({}, state, {
-      freq: action.freq
+      channels: [...action.channels]
     });
 
     default:
