@@ -15,6 +15,7 @@ class Channel {
     this.lookahead = 25.0;
     this.scheduleAheadTime = 0.1;
     this.nextNoteTime = 0.0;
+    this.stopped = false;
 
     this.outputNode = this.actx.createGain();
     this.outputNode.connect(this.actx.destination);
@@ -23,12 +24,19 @@ class Channel {
     this.scheduler();
   }
 
+  stop() {
+    this.stopped = true;
+    this.outputNode.disconnect();
+  }
+
   scheduler() {
-    while(this.nextNoteTime < this.actx.currentTime + this.scheduleAheadTime) {
-      this.scheduleNote(this.current16thNote, this.nextNoteTime);
-      this.nextNote();
+    if(!this.stopped) {
+      while(this.nextNoteTime < this.actx.currentTime + this.scheduleAheadTime) {
+        this.scheduleNote(this.current16thNote, this.nextNoteTime);
+        this.nextNote();
+      }
+      setTimeout(this.scheduler.bind(this), this.lookahead);
     }
-    setTimeout(this.scheduler.bind(this), this.lookahead);
   }
 
   scheduleNote(beatNumber, time) {
@@ -56,8 +64,9 @@ class Channel {
 
 const mapStateToProps = (state) => {
   return {
-    channels: state.Music.channels,
-    active: state.Music.active
+    channelSets: state.Music.channelSets,
+    active: state.Music.active,
+    activeChannelSet: state.Music.activeChannelSet
   }
 }
 
@@ -73,30 +82,36 @@ class AmbientPlayerComponent extends React.Component {
 		this.state = {
 
 		}
-    console.log(this.props.channels);
+    this.channelSets = {}
 	}
 
 	componentDidMount() {
-
+    this.initAudio();
 	}
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.channels.length < this.props.channels.length) {
-      this.startAmbience();
+    if(prevProps.activeChannelSet != this.props.activeChannelSet) {
+      // stop all channels (fading comes later)
+      for(var key in this.channelSets) {
+        if(this.channelSets.hasOwnProperty(key)) {
+          var cs = this.channelSets[key];
+          for(var i=0; i<cs.length; i++) {
+            cs[i].stop();
+          }
+        }
+      }
+
+      this.channelSets[this.props.activeChannelSet] = this.props.channelSets[this.props.activeChannelSet].map(function(channel, idx) {
+        return new Channel("oscSet", channel, this.actx)
+      }.bind(this))
     }
   }
 
-	startAmbience() {
+	initAudio() {
 		this.actx = new AudioContext();
-
 		this.outputNode = this.actx.createGain();
     this.outputNode.connect(this.actx.destination);
     this.outputNode.gain.value = 0.1;
-
-    this.props.channels.map(function(channel, idx) {
-      var c = new Channel("osc", channel, this.actx);
-      console.log(channel)
-    }.bind(this))
 	}
 
 	render() {

@@ -3,7 +3,8 @@ import * as Actions from '../actions/MusicActions';
 export default function Background(
   state = {
     active: true,
-    channels: []
+    activeChannelSet: null,
+    channelSets: {}
   },
   action
 ) {
@@ -14,8 +15,11 @@ export default function Background(
     });
 
     case Actions.SET_AMBIENCE:
+    var channelSetCopy = JSON.parse(JSON.stringify(state.channelSets));
+    channelSetCopy[action.name] = action.channels;
     return Object.assign({}, state, {
-      channels: [...action.channels]
+      channelSets: channelSetCopy,
+      activeChannelSet: action.name
     });
 
     default:

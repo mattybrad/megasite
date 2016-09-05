@@ -8,6 +8,7 @@ export default class PageComponent extends React.Component {
       <div>
         <BackgroundDefinition primaryColor='#00cccc' secondaryColor='#0000ff' />
         <AmbientDefinition
+          name="home"
           channels={
             [
               {

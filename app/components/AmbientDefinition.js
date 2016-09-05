@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setAmbience: (channels) => {
-      dispatch(Actions.setAmbience(channels));
+    setAmbience: (name, channels) => {
+      dispatch(Actions.setAmbience(name, channels));
     }
   }
 }
@@ -26,7 +26,7 @@ class AmbientDefinitionComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.setAmbience(this.props.channels);
+		this.props.setAmbience(this.props.name, this.props.channels);
 	}
 
 	render() {
