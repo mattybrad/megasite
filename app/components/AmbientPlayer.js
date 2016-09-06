@@ -6,7 +6,7 @@ import * as Actions from '../actions/MusicActions';
 // big thanks to https://github.com/cwilso/metronome
 
 class Channel {
-  constructor(params, actx) {
+  constructor(params, actx, channelSetNode) {
     this.params = params;
     this.actx = actx;
     this.current16thNote = 0;
@@ -17,7 +17,7 @@ class Channel {
     this.stopped = false;
 
     this.outputNode = this.actx.createGain();
-    this.outputNode.connect(this.actx.destination);
+    this.outputNode.connect(channelSetNode);
     this.outputNode.gain.value = (this.params.type=="oscSet")?0.005:0.1;
 
     if(this.params.type=="oscSet") this.scheduler();
@@ -54,9 +54,9 @@ class Channel {
     var src = this.actx.createBufferSource();
     var gain = this.actx.createGain();
     gain.gain.setValueAtTime(0.001, this.actx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(1.0, this.actx.currentTime + this.params.fadeTime/2);
+    gain.gain.linearRampToValueAtTime(1.0, this.actx.currentTime + this.params.fadeTime/2);
     gain.gain.setValueAtTime(1.0, this.actx.currentTime + this.buffer.duration - this.params.fadeTime/2);
-    gain.gain.exponentialRampToValueAtTime(0.001, this.actx.currentTime + this.buffer.duration);
+    gain.gain.linearRampToValueAtTime(0.001, this.actx.currentTime + this.buffer.duration);
     src.buffer = this.buffer;
     src.connect(gain);
     gain.connect(this.outputNode);
@@ -97,6 +97,35 @@ class Channel {
   }
 }
 
+class ChannelSet {
+  constructor(channelParams, actx) {
+    this.active = false;
+    this.actx = actx;
+    this.outputNode = this.actx.createGain();
+    this.outputNode.gain.value = 0;
+    this.outputNode.connect(this.actx.destination);
+    this.channels = channelParams.map(function(channel, idx) {
+      return new Channel(channel, this.actx, this.outputNode)
+    }.bind(this))
+  }
+
+  stop() {
+    for(var i=0; i<this.channels.length; i++) {
+      this.channels[i].stop();
+    }
+  }
+
+  fadeIn() {
+    this.outputNode.gain.setValueAtTime(0.001, this.actx.currentTime);
+    this.outputNode.gain.linearRampToValueAtTime(1, this.actx.currentTime+5);
+  }
+
+  fadeOut() {
+    this.outputNode.gain.setValueAtTime(1, this.actx.currentTime);
+    this.outputNode.gain.linearRampToValueAtTime(0.001, this.actx.currentTime+5);
+  }
+}
+
 const mapStateToProps = (state) => {
   return {
     channelSets: state.Music.channelSets,
@@ -134,17 +163,18 @@ class AmbientPlayerComponent extends React.Component {
     // stop all channels (fading comes later)
     for(var key in this.channelSets) {
       if(this.channelSets.hasOwnProperty(key)) {
-        var cs = this.channelSets[key];
-        for(var i=0; i<cs.length; i++) {
-          cs[i].stop();
-        }
+        if(this.channelSets[key].active) this.channelSets[key].fadeOut();
+        this.channelSets[key].active = false;
       }
     }
 
     if(this.props.active) {
-      this.channelSets[this.props.activeChannelSet] = this.props.channelSets[this.props.activeChannelSet].map(function(channel, idx) {
-        return new Channel(channel, this.actx)
-      }.bind(this))
+      // this.channelSets[this.props.activeChannelSet] = this.props.channelSets[this.props.activeChannelSet].map(function(channel, idx) {
+      //   return new Channel(channel, this.actx)
+      // }.bind(this))
+      this.channelSets[this.props.activeChannelSet] = new ChannelSet(this.props.channelSets[this.props.activeChannelSet], this.actx);
+      this.channelSets[this.props.activeChannelSet].fadeIn();
+      this.channelSets[this.props.activeChannelSet].active = true;
     }
   }
 
