@@ -23,6 +23,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.use('/css', express.static('app/css'));
+app.use('/mp3', express.static('app/mp3'));
 
 app.use('/', routes);
 

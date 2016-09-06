@@ -22,6 +22,11 @@ export default class PageComponent extends React.Component {
                 notes: [300,330],
                 wave: "sine",
                 probability: 1
+              },
+              {
+                type: "crossfadeLoop",
+                path: "testloop.mp3",
+                fadeTime: 15
               }
             ]
           }

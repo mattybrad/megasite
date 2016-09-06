@@ -6,8 +6,7 @@ import * as Actions from '../actions/MusicActions';
 // big thanks to https://github.com/cwilso/metronome
 
 class Channel {
-  constructor(type, params, actx) {
-    this.type = type;
+  constructor(params, actx) {
     this.params = params;
     this.actx = actx;
     this.current16thNote = 0;
@@ -19,14 +18,50 @@ class Channel {
 
     this.outputNode = this.actx.createGain();
     this.outputNode.connect(this.actx.destination);
-    this.outputNode.gain.value = 0.1;
+    this.outputNode.gain.value = (this.params.type=="oscSet")?0.005:0.1;
 
-    this.scheduler();
+    if(this.params.type=="oscSet") this.scheduler();
+    else if(this.params.type=="crossfadeLoop") this.loadSample();
   }
 
   stop() {
     this.stopped = true;
     this.outputNode.disconnect();
+  }
+
+  loadSample() {
+    var request = new XMLHttpRequest();
+    request.open('GET', "/mp3/"+this.params.path, true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = function() {
+      this.actx.decodeAudioData(request.response, function(buffer) {
+        this.buffer = buffer;
+        this.params.fadeTime = Math.min(this.params.fadeTime, buffer.duration/2);
+        this.playSample();
+        // var src1 = this.actx.createBufferSource();
+        // var src2 = this.actx.createBufferSource();
+        // src1.buffer = src2.buffer = buffer;
+        // src1.connect(this.outputNode);
+        // src2.connect(this.outputNode);
+        // src1.
+      }.bind(this), function(){});
+    }.bind(this)
+    request.send();
+  }
+
+  playSample() {
+    var src = this.actx.createBufferSource();
+    var gain = this.actx.createGain();
+    gain.gain.setValueAtTime(0.001, this.actx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(1.0, this.actx.currentTime + this.params.fadeTime/2);
+    gain.gain.setValueAtTime(1.0, this.actx.currentTime + this.buffer.duration - this.params.fadeTime/2);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.actx.currentTime + this.buffer.duration);
+    src.buffer = this.buffer;
+    src.connect(gain);
+    gain.connect(this.outputNode);
+    src.start();
+    setTimeout(this.playSample.bind(this), (this.buffer.duration - this.params.fadeTime) * 1000);
   }
 
   scheduler() {
@@ -108,7 +143,7 @@ class AmbientPlayerComponent extends React.Component {
 
     if(this.props.active) {
       this.channelSets[this.props.activeChannelSet] = this.props.channelSets[this.props.activeChannelSet].map(function(channel, idx) {
-        return new Channel("oscSet", channel, this.actx)
+        return new Channel(channel, this.actx)
       }.bind(this))
     }
   }
